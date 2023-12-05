@@ -31,6 +31,7 @@ print("Generating folds...")
 np.random.seed(0)               
 data = np.random.choice(list(ball_frames.keys()), (5, 1000), False)
 for i in range(5):
+    # Create validation fold
     valid = data[i]
     path = f"D:\\Dropbox\\Apps\\cis530\\ball-data\\fold{i}\\valid"
     if not os.path.exists(path):
@@ -43,6 +44,7 @@ for i in range(5):
             yolo_file.write(ball_frames[file])
         print(f"Copying {file} into validation set for fold {i}")
     
+    # Create training fold
     train = np.delete(data, i, 0).flatten()
     path = f"D:\\Dropbox\\Apps\\cis530\\ball-data\\fold{i}\\train"
     if not os.path.exists(path):
@@ -54,3 +56,7 @@ for i in range(5):
         with open(path + f"\\labels\\{file[:-4]}.txt", "w") as yolo_file:
             yolo_file.write(ball_frames[file])
         print(f"Copying {file} into training set for fold {i}")
+    
+    # Create yaml file for fold
+    with open(f"D:\\Dropbox\\Apps\\cis530\\ball-data\\fold{i}\\ball-data.yaml", "w") as yaml_file:
+        yaml_file.write("train: ../train/images\nval: ../valid/images\n\nnc: 1\nnames: ['ball']")

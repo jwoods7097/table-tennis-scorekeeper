@@ -4,7 +4,7 @@ import re
 import shutil
 import numpy as np
 
-games = ['game_1', 'game_2', 'game_3', 'game_4', 'game_5', 'test_1', 'test_2']
+games = ['game_1', 'game_2', 'game_3', 'game_4', 'game_5']
 file_dict = {"bounce": [], "empty_event": [], "net": []}
 
 # Get labeled frames  
@@ -27,6 +27,7 @@ np.random.seed(0)
 for cls, ls in file_dict.items():
     data = np.random.choice(ls, (5, 200), False)
     for i in range(5):
+        # Create validation fold
         valid = data[i]
         path = f"D:\\Dropbox\\Apps\\cis530\\event-data\\fold{i}\\val\\{cls}"
         if not os.path.exists(path):
@@ -35,6 +36,7 @@ for cls, ls in file_dict.items():
             shutil.copyfile('D:\\Dropbox\\Apps\\cis530\\all-frames\\' + file, f"{path}\\{file}")
             print(f"Copying {file} into validation set for fold {i}")
         
+        # Create training fold
         train = np.delete(data, i, 0).flatten()
         path = f"D:\\Dropbox\\Apps\\cis530\\event-data\\fold{i}\\train\\{cls}"
         if not os.path.exists(path):
