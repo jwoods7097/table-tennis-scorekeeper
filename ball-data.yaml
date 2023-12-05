@@ -1,0 +1,5 @@
+train: ../ball-data/train/images
+val: ../ball-data/valid/images
+
+nc: 1
+names: ['ball']
