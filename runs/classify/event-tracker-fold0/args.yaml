@@ -12,7 +12,7 @@ cache: false
 device: 0
 workers: 8
 project: null
-name: event-tracker-fold0
+name: event-tracker-fold02
 exist_ok: false
 pretrained: true
 optimizer: auto
@@ -95,4 +95,4 @@ mixup: 0.0
 copy_paste: 0.0
 cfg: null
 tracker: botsort.yaml
-save_dir: runs/classify/event-tracker-fold0
+save_dir: runs/classify/event-tracker-fold02
