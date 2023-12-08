@@ -18,12 +18,14 @@ def import_data(path, debug=False):
     return data
 
 ball_fold_results = import_data("runs/detect/ball-tracker-10k")
+event_fold_results = import_data("runs/classify/event-tracker")
 
 if not os.path.exists("plots"):
     os.makedirs("plots")
 
-# general results for ball model folds
-def plot_results(means):
+# General results for ball model folds
+# means: If true, plots an average and standard deviation for all folds instead of each fold independently
+def plot_ball_results(means):
     extra = dict()
     if not means:
         extra = {"hue": "fold", "palette": "deep"}
@@ -81,31 +83,98 @@ def plot_results(means):
     plt.ylabel("")
 
     plt.tight_layout()
-    plt.savefig("plots/results_means.png" if means else "plots/results.png")
+    plt.savefig("plots/ball_results_means.png" if means else "plots/ball_results.png")
     plt.clf()
 
-plot_results(True)
-plot_results(False)
+plot_ball_results(True)
+plot_ball_results(False)
+
+# General results for event model folds
+# means: If true, plots an average and standard deviation for all folds instead of each fold independently
+def plot_event_results(means):
+    extra = dict()
+    if not means:
+        extra = {"hue": "fold", "palette": "deep"}
+    
+    plt.figure(figsize=(9,3))
+
+    plt.subplot(1,3,1)
+    seaborn.lineplot(data=event_fold_results, x="epoch", y="train/loss", **extra)
+    plt.title("train/loss")
+    plt.ylabel("")
+
+    plt.subplot(1,3,2)
+    seaborn.lineplot(data=event_fold_results, x="epoch", y="val/loss", **extra)
+    plt.title("val/loss")
+    plt.ylabel("")
+
+    plt.subplot(1,3,3)
+    seaborn.lineplot(data=event_fold_results, x="epoch", y="metrics/accuracy_top1", **extra)
+    plt.title("metrics/accuracy_top1")
+    plt.ylabel("")
+
+    plt.tight_layout()
+    plt.savefig("plots/event_results_means.png" if means else "plots/event_results.png")
+    plt.clf()
+
+plot_event_results(True)
+plot_event_results(False)
 
 # training cls_loss for all 5 folds of ball model
 # training ball loss from baseline
-plt.figure(figsize=(6.4,4.8))
+plt.figure(figsize=(3,3))
 seaborn.lineplot(data=ball_fold_results, x="epoch", y="train/cls_loss")
 plt.title("Training Loss")
 plt.ylabel("Loss")
 plt.ylim([0,1])
-plt.xlabel("Training Epoch")
-plt.savefig('plots/train_loss.png')
+plt.xlabel("Epoch")
+plt.savefig('plots/ball_train_loss.png')
+plt.clf()
 
 # validation cls_loss for all 5 folds of ball model
 # validation ball loss from baseline
+seaborn.lineplot(data=ball_fold_results, x="epoch", y="val/cls_loss")
+plt.title("Validation Loss")
+plt.ylabel("Loss")
+plt.ylim([0,1])
+plt.xlabel("Epoch")
+plt.savefig('plots/ball_valid_loss.png')
+plt.clf()
 
 # mAP50 for all 5 folds of ball model (compare with accuracy from paper)
+seaborn.lineplot(data=ball_fold_results, x="epoch", y="metrics/mAP50(B)")
+plt.title("Mean Average Precision")
+plt.ylabel("mAP50")
+plt.ylim([0,1])
+plt.xlabel("Epoch")
+plt.savefig('plots/ball_mAP50.png')
+plt.clf()
 
 # training loss for all 5 folds of event model
 # training event loss from baseline
+seaborn.lineplot(data=event_fold_results, x="epoch", y="train/loss")
+plt.title("Training Loss")
+plt.ylabel("Loss")
+plt.ylim([0,1])
+plt.xlabel("Epoch")
+plt.savefig('plots/event_train_loss.png')
+plt.clf()
 
 # validation loss for all 5 folds of event model
 # validation event loss from baseline
+seaborn.lineplot(data=event_fold_results, x="epoch", y="val/loss")
+plt.title("Validation Loss")
+plt.ylabel("Loss")
+plt.ylim([0,1])
+plt.xlabel("Epoch")
+plt.savefig('plots/event_valid_loss.png')
+plt.clf()
 
 # accuracy_top1 for all 5 folds of event model (compare with accuracy from paper)
+seaborn.lineplot(data=event_fold_results, x="epoch", y="metrics/accuracy_top1")
+plt.title("Top 1 Accuracy")
+plt.ylabel("Accuracy")
+plt.ylim([0,1])
+plt.xlabel("Epoch")
+plt.savefig('plots/event_accuracy.png')
+plt.clf()
