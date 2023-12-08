@@ -3,8 +3,8 @@ mode: train
 model: yolov8m-cls.pt
 data: event-data/fold1
 epochs: 100
-patience: 50
-batch: -1
+patience: 100
+batch: 16
 imgsz: 1080
 save: true
 save_period: -1
@@ -12,7 +12,7 @@ cache: false
 device: 0
 workers: 8
 project: null
-name: event-tracker-fold12
+name: event-tracker-fold14
 exist_ok: false
 pretrained: true
 optimizer: auto
@@ -95,4 +95,4 @@ mixup: 0.0
 copy_paste: 0.0
 cfg: null
 tracker: botsort.yaml
-save_dir: runs/classify/event-tracker-fold12
+save_dir: runs/classify/event-tracker-fold14

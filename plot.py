@@ -17,12 +17,12 @@ def import_data(path, debug=False):
         data.to_excel(path[path.rfind('/') + 1:] + ".xlsx")
     return data
 
-ball_fold_results = import_data("runs/detect/ball-tracker-10k", True)
+ball_fold_results = import_data("runs/detect/ball-tracker-10k")
 
 if not os.path.exists("plots"):
     os.makedirs("plots")
 
-# general results for folds
+# general results for ball model folds
 def plot_results(means):
     extra = dict()
     if not means:
@@ -89,6 +89,7 @@ plot_results(False)
 
 # training cls_loss for all 5 folds of ball model
 # training ball loss from baseline
+plt.figure(figsize=(6.4,4.8))
 seaborn.lineplot(data=ball_fold_results, x="epoch", y="train/cls_loss")
 plt.title("Training Loss")
 plt.ylabel("Loss")

@@ -3,8 +3,8 @@ mode: train
 model: yolov8m-cls.pt
 data: event-data/fold3
 epochs: 100
-patience: 50
-batch: -1
+patience: 100
+batch: 16
 imgsz: 1080
 save: true
 save_period: -1

@@ -14,4 +14,4 @@ data_path="event-data/fold${SLURM_ARRAY_TASK_ID}"
 model_name="event-tracker-fold${SLURM_ARRAY_TASK_ID}"
 
 module load Python/3.11.2-GCCcore-12.2.0-bare
-conda run -n cis530 --no-capture-output yolo classify train data=$data_path model=yolov8m-cls.pt epochs=100 imgsz=1080 batch=-1 device=0 name=$model_name
+conda run -n cis530 --no-capture-output yolo classify train data=$data_path model=yolov8m-cls.pt epochs=100 imgsz=1080 batch=16 device=0 patience=100 name=$model_name

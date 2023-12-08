@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#SBATCH --job-name=train_event_model
+#SBATCH --job-name=train_ball_model
 #SBATCH --array=0-4
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=4
@@ -11,7 +11,7 @@
 #SBATCH --gres=gpu:2
 
 data_path="ball-data/fold${SLURM_ARRAY_TASK_ID}/ball-data.yaml"
-model_name="ball-tracker-fold${SLURM_ARRAY_TASK_ID}"
+model_name="ball-tracker-10k-fold${SLURM_ARRAY_TASK_ID}"
 
 module load Python/3.11.2-GCCcore-12.2.0-bare
 cd datasets
