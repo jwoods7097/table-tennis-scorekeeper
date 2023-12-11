@@ -1,1 +1,1 @@
-# table-tennis-scorekeeper
+In order to process a video, one first needs to make sure that the input video and the ball and events models are in the same directory as the scorekeeper file. Additionally, the variable 'video_path' in the scorekeeper file needs to be changed to the input video name. Once this is done, one can simply start the program by first opening the terminal or another interface that has python installed, and then executing the command 'python scorekeeper.py'. The resulting output will be a file named 'output_video.mp4' in the same directory.
