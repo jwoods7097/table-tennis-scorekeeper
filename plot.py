@@ -120,61 +120,40 @@ def plot_event_results(means):
 plot_event_results(True)
 plot_event_results(False)
 
-# training cls_loss for all 5 folds of ball model
-# training ball loss from baseline
-plt.figure(figsize=(3,3))
-seaborn.lineplot(data=ball_fold_results, x="epoch", y="train/cls_loss")
-plt.title("Training Loss")
+# Fold selection plots
+plt.figure(figsize=(6,6))
+
+plt.subplot(2,2,1)
+seaborn.lineplot(data=ball_fold_results, x="epoch", y="val/dfl_loss", hue="fold", palette="deep")
+plt.title("Ball Detection Validation Loss")
 plt.ylabel("Loss")
-plt.ylim([0,1])
+plt.ylim([0.42,0.52])
 plt.xlabel("Epoch")
-plt.savefig('plots/ball_train_loss.png')
-plt.clf()
 
-# validation cls_loss for all 5 folds of ball model
-# validation ball loss from baseline
-seaborn.lineplot(data=ball_fold_results, x="epoch", y="val/cls_loss")
-plt.title("Validation Loss")
+plt.subplot(2,2,2)
+seaborn.lineplot(data=ball_fold_results, x="epoch", y="metrics/recall(B)", hue="fold", palette="deep")
+plt.title("Ball Detection Recall")
+plt.ylabel("Recall")
+plt.ylim([0.94,0.98])
+plt.xlabel("Epoch")
+plt.legend('',frameon=False)
+
+plt.subplot(2,2,3)
+seaborn.lineplot(data=event_fold_results, x="epoch", y="val/loss", hue="fold", palette="deep")
+plt.title("Event Classification Validation Loss")
 plt.ylabel("Loss")
-plt.ylim([0,1])
+plt.ylim([0.28, 0.32])
 plt.xlabel("Epoch")
-plt.savefig('plots/ball_valid_loss.png')
-plt.clf()
+plt.legend('',frameon=False)
 
-# mAP50 for all 5 folds of ball model (compare with accuracy from paper)
-seaborn.lineplot(data=ball_fold_results, x="epoch", y="metrics/mAP50(B)")
-plt.title("Mean Average Precision")
-plt.ylabel("mAP50")
-plt.ylim([0,1])
-plt.xlabel("Epoch")
-plt.savefig('plots/ball_mAP50.png')
-plt.clf()
-
-# training loss for all 5 folds of event model
-# training event loss from baseline
-seaborn.lineplot(data=event_fold_results, x="epoch", y="train/loss")
-plt.title("Training Loss")
-plt.ylabel("Loss")
-plt.ylim([0,1])
-plt.xlabel("Epoch")
-plt.savefig('plots/event_train_loss.png')
-plt.clf()
-
-# validation loss for all 5 folds of event model
-# validation event loss from baseline
-seaborn.lineplot(data=event_fold_results, x="epoch", y="val/loss")
-plt.title("Validation Loss")
-plt.ylabel("Loss")
-plt.ylim([0,1])
-plt.xlabel("Epoch")
-plt.savefig('plots/event_valid_loss.png')
-plt.clf()
-
-# accuracy_top1 for all 5 folds of event model (compare with accuracy from paper)
-seaborn.lineplot(data=event_fold_results, x="epoch", y="metrics/accuracy_top1")
-plt.title("Top 1 Accuracy")
+plt.subplot(2,2,4)
+seaborn.lineplot(data=event_fold_results, x="epoch", y="metrics/accuracy_top1", hue="fold", palette="deep")
+plt.title("Event Classification Accuracy")
 plt.ylabel("Accuracy")
-plt.ylim([0,1])
+plt.ylim([0.92,1.0])
 plt.xlabel("Epoch")
-plt.savefig('plots/event_accuracy.png')
+plt.legend('',frameon=False)
+
+plt.tight_layout()
+plt.savefig('plots/fold_analysis.png')
 plt.clf()
